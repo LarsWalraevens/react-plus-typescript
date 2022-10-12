@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: "./src/index.ts", // Start processing code from this file
+    entry: "./src/index.tsx", // Start processing code from this file
     resolve: { // resolve typescript files, doesnt do this by default
         extensions: ['.js', '.ts', '.tsx']
     },
