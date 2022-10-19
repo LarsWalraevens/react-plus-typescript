@@ -6,6 +6,9 @@
         "jsx": "react",
         "isolatedModules": true,
         "esModuleInterop": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "Node",
     },
 }
