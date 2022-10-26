@@ -1,11 +1,10 @@
-import React, { createContext, useContext, useReducer, useState } from 'react';
-import { useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
 interface Props {
     children: React.ReactNode;
 }
 
-interface CartItem {
+export interface CartItem {
     id: number; name: string; price: number, quantity: number
 }
 
@@ -37,7 +36,7 @@ interface AddToCartAction extends Action<'ADD_TO_CART'> {
 
 interface InitiliazeCartAction extends Action<'INITIALIZE_CART'> {
     payload: {
-        cart: AppStateValue['cart'] // SELECTS ITEM OBJECT IN APPSTATEVALUJE
+        cart: AppStateValue['cart'] // SELECTS ITEM OBJECT IN APPSTATEVALUE
     }
 }
 
