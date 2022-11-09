@@ -25,3 +25,19 @@ export function withAddToCart<OriginalProps extends AddToCartProps>(ChildCompone
 
     return AddToCartHOC;
 }
+
+// render props component
+// component accepts children that is used as a function with argument (props) and it returns an element
+export const WithAddToCartProps: React.FC<{ children: (props: AddToCartProps) => JSX.Element }> = ({ children }) => {
+    const dispatch = useStateDispatch();
+    // AddToCartProps[item] -> SELECTS ITEM OBJECT IN APPSTATEVALUE
+    const addToCart: AddToCartProps['addToCart'] = (item) => {
+        dispatch({
+            type: 'ADD_TO_CART',
+            payload: {
+                item
+            }
+        })
+    }
+    return children({ addToCart })
+}
