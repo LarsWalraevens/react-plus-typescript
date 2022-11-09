@@ -10,6 +10,18 @@ import SpecialOffer from './SpecialOffer';
 
 const App = () => {
     const specialOfferPizza = pizzas.find((pizza) => pizza.specialOffer);
+
+    // example useeffect event listener & avoid memory leak by clearing event listener after
+    // React.useEffect(() => {
+    //     const listener = () => {
+    //         alert('Hello');
+    //     };
+    //     document.addEventListener('mousedown', listener);
+    //     return () => {
+    //         document.removeEventListener('mousedown', listener)
+    //     }
+    // }, [])
+
     return (
         // provides the 'global state' for cart to all wrapped components
         <AppStateProvider>

@@ -10,21 +10,37 @@ interface State {
 }
 
 class Cart extends React.Component<Props, State> {
+    #containerRef: React.RefObject<HTMLDivElement>;
     constructor(props: Props) {
         super(props);
         this.state = {
             isOpen: false,
         }
+
+        this.#containerRef = React.createRef();
     }
 
     // with a structure like this you do not need to bind the function in a component class:
     // function = (args)=> {}
     handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        console.log(e.currentTarget);
-        if ((e.target as HTMLElement).nodeName === "SPAN") {
-            // (e.target as HTMLSpanElement)
-        }
         this.setState((prevState) => ({ isOpen: !prevState.isOpen }))
+    };
+
+    handleOutsideClick = (e: MouseEvent) => {
+        console.log("clicked");
+        // TYPE DIFFERENCE nodes: all nodes  (html, comments, events - like this, etc) | html element: subclass of nodes (html tags)
+        if (this.#containerRef.current && !this.#containerRef.current.contains(e.target as Node)) {
+            this.setState({ isOpen: false });
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', (e) => this.handleOutsideClick(e))
+    }
+
+    // clear eventlistener if unmounts
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', (e) => this.handleOutsideClick(e))
     }
 
     render() {
@@ -35,7 +51,7 @@ class Cart extends React.Component<Props, State> {
                 const itemCount = (state.cart.items).reduce((sum, item) => {
                     return sum + item.quantity
                 }, 0)
-                return <div className={CartCSS.cartContainer}>
+                return <div ref={this.#containerRef} className={CartCSS.cartContainer}>
                     <button className={CartCSS.button} type="button" onClick={this.handleClick}>
                         <FiShoppingCart />
                         <span>
