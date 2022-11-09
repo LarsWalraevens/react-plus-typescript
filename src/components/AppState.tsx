@@ -30,7 +30,7 @@ interface Action<T> {
 
 interface AddToCartAction extends Action<'ADD_TO_CART'> {
     payload: {
-        item: Omit<CartItem, 'quantity'>
+        item: Omit<CartItem, 'quantity'> // IS CARTITEM TYPE BUT WITHOUT QUANTITY
     }
 }
 
@@ -40,16 +40,20 @@ interface InitiliazeCartAction extends Action<'INITIALIZE_CART'> {
     }
 }
 
+// reducer only accepts 2 different type of actions
 const reducer = (state: AppStateValue, action: AddToCartAction | InitiliazeCartAction) => {
     // update the state with rules dictated by action
     // AFTER: return updated state
     if (action.type === "ADD_TO_CART") {
         const itemToAdd = action.payload.item;
         const itemExists = state.cart.items.find((item) => item.id === itemToAdd.id);
+        // handle item state & quantity
         return {
             ...state,
             cart: {
                 ...state.cart,
+                // conditional to handle quanity (originally filtered out to handle in here)
+                // go through all items in card and group them, just change quantity
                 items: itemExists ? state.cart.items.map(item => {
                     if (item.id === itemToAdd.id) {
                         return { ...item, quantity: item.quantity + 1 }
@@ -57,7 +61,7 @@ const reducer = (state: AppStateValue, action: AddToCartAction | InitiliazeCartA
                     return item;
                 }) : [
                     ...state.cart.items,
-
+                    // if item doesnt exist, create new
                     { ...itemToAdd, quantity: 1 }
                 ]
             }

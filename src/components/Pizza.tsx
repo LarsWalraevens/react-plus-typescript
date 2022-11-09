@@ -3,7 +3,7 @@ import { Pizza } from '../types';
 import { AddToCartProps, withAddToCart } from './AddToCart';
 import PizzaCSS from './Pizza.module.css';
 
-
+// pizza is imported and looks like -> {id: number, name: string, description: string, price: number}
 interface Props extends AddToCartProps {
     pizza: Pizza
 }

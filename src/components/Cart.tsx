@@ -15,11 +15,10 @@ class Cart extends React.Component<Props, State> {
         this.state = {
             isOpen: false,
         }
-
-        // this.handleClick = this.handleClick.bind(this);
     }
 
-    // function = (args)=> {} --> not needed to bind this
+    // with a structure like this you do not need to bind the function in a component class:
+    // function = (args)=> {}
     handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         console.log(e.currentTarget);
         if ((e.target as HTMLElement).nodeName === "SPAN") {
@@ -30,7 +29,9 @@ class Cart extends React.Component<Props, State> {
 
     render() {
         return (
+            // render something based on the context value
             <AppStateContext.Consumer>{(state) => {
+                // reduce is used to add up to a total
                 const itemCount = (state.cart.items).reduce((sum, item) => {
                     return sum + item.quantity
                 }, 0)

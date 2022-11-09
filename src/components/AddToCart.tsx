@@ -2,13 +2,15 @@ import React from 'react';
 import { CartItem, useStateDispatch } from './AppState';
 
 export interface AddToCartProps {
+    // addToCart expects a function with an item (filtered out quantity) in it 
     addToCart: (item: Omit<CartItem, 'quantity'>) => void;
 }
 
 export function withAddToCart<OriginalProps extends AddToCartProps>(ChildComponent: React.ComponentType<OriginalProps>) {
+    // Pizza.jsx expects a addtocard, but this is handled in the HOC, so filter this out of the props
     const AddToCartHOC = (props: Omit<OriginalProps, keyof AddToCartProps>) => {
         const dispatch = useStateDispatch();
-        //AddToCartProps[item] -> SELECTS ITEM OBJECT IN APPSTATEVALUE
+        // AddToCartProps[item] -> SELECTS ITEM OBJECT IN APPSTATEVALUE
         const handleAddToCartClick: AddToCartProps['addToCart'] = (item) => {
             dispatch({
                 type: 'ADD_TO_CART',
@@ -17,6 +19,7 @@ export function withAddToCart<OriginalProps extends AddToCartProps>(ChildCompone
                 }
             })
         }
+        // give addToCart this new HOC function handler
         return <ChildComponent {...(props as OriginalProps)} addToCart={handleAddToCartClick} />
     }
 
