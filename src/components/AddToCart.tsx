@@ -41,3 +41,19 @@ export const WithAddToCartProps: React.FC<{ children: (props: AddToCartProps) =>
     }
     return children({ addToCart })
 }
+
+// custom hook
+export const useAddToCart = () => {
+    const dispatch = useStateDispatch();
+    // AddToCartProps[item] -> SELECTS ITEM OBJECT IN APPSTATEVALUE
+    const addToCart: AddToCartProps['addToCart'] = (item) => {
+        dispatch({
+            type: 'ADD_TO_CART',
+            payload: {
+                item
+            }
+        })
+    }
+
+    return addToCart;
+}
